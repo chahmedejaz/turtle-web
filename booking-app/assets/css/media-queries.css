@@ -1,0 +1,51 @@
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .instructions {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .page_section {
+    max-width: 100%;
+  }
+
+  .ticket {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .duration_container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .charges_table,
+  .summary_table,
+  .guests {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sections li {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .ticket {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1440px) {
+  .sections li {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/media-queries.css" />
+    <script src="./assets/scripts/index.js"></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Life of Turtles - Booking</title>
+  </head>
+  <body
+    x-data="{
+			selectedDate: currentDate(),
+			tickets: [ 
+                  {name: 'Foreigner Adult', description: 'Above 15 yrs', quantity: 1},
+                  {name: 'Foreigner Child', description: '5 to 14 yrs', quantity: 0},
+									{name: 'SL Adult', description: 'Above 15 yrs', quantity: 0},
+									{name: 'SL Child', description: '5 to 14 yrs', quantity: 0},
+									{name: 'Infant', description: 'Under 4 yrs', quantity: 0},
+								],
+			timeOptions: [
+											{label: '07.00 am', value: 7},
+											{label: '08.00 am', value: 8},
+											{label: '09.00 am', value: 9},
+											{label: '10.00 am', value: 10},
+											{label: '11.00 am', value: 11},
+											{label: '12.00 pm', value: 12},
+											{label: '01.00 pm', value: 13},
+											{label: '02.00 pm', value: 14},
+											{label: '03.00 pm', value: 15},
+											{label: '04.00 pm', value: 16},
+											{label: '05.00 pm', value: 17},
+											{label: '06.00 pm', value: 18}
+										],
+			selectedBeginTime: 7,
+			selectedEndTime: 8,
+		}"
+  >
+    <!-- Header -->
+    <div class="header">
+      <!-- Home link -->
+      <div class="home-link">
+        <a href="../"> &lt; Home</a>
+      </div>
+      <!-- Title -->
+      <div class="title">
+        <a href="./">
+          <h1>Buy Tickets</h1>
+        </a>
+      </div>
+      <!-- Instructions -->
+      <div class="instructions">
+        <div class="instructions_text">
+          <p>Show your tickets via mobile</p>
+          <p>device or print at home.</p>
+        </div>
+        <img src="./assets/media/icons/mobile.png" alt="Mobile Logo" />
+      </div>
+    </div>
+
+    <!-- Sections List -->
+    <div class="sections">
+      <ul>
+        <li class="current_section">Tickets</li>
+        <li>&gt;</li>
+        <li>Details</li>
+        <li>&gt;</li>
+        <li>Payment</li>
+        <li>&gt;</li>
+        <li>Confirmation</li>
+      </ul>
+    </div>
+
+    <!-- Tickets Section -->
+    <section class="page_section">
+      <div class="dates_guest_summary_container">
+        <div class="dates_guest">
+          <!-- Dates -->
+          <section>
+            <h2>When are you coming?</h2>
+            <input class="datepicker" type="date" x-model="selectedDate" />
+          </section>
+
+          <!-- Guests -->
+          <section class="guests">
+            <h2>Guests</h2>
+            <!-- Display all tickets -->
+            <template x-for="ticket in tickets">
+              <div class="ticket">
+                <!-- Ticket Details -->
+                <div class="ticket_details">
+                  <p class="ticket_name" x-text="ticket.name"></p>
+                  <p class="ticket_description" x-text="ticket.description"></p>
+                </div>
+                <!-- Ticket quantity handler -->
+                <div class="ticket_quantity">
+                  <button
+                    class="round-button"
+                    @click="if(ticket.quantity) ticket.quantity -= 1"
+                  >
+                    -
+                  </button>
+                  <p x-text="ticket.quantity"></p>
+                  <button class="round-button" @click="ticket.quantity += 1">
+                    +
+                  </button>
+                </div>
+              </div>
+            </template>
+          </section>
+        </div>
+
+        <section>
+          <!-- Summary table -->
+          <div class="summary_table">
+            <div class="table_heading">
+              <p>Purchase Summary</p>
+            </div>
+            <table>
+              <tr>
+                <td>Date</td>
+                <td x-text="formatDate(selectedDate)"></td>
+              </tr>
+              <tr>
+                <td>Time</td>
+                <td
+                  x-text="getTime(selectedBeginTime, selectedEndTime, timeOptions)"
+                ></td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td
+                  x-text="getDuration(selectedBeginTime, selectedEndTime)"
+                ></td>
+              </tr>
+              <tr class="ticket_charges_heading">
+                <td>Tickets</td>
+                <td>Charges</td>
+              </tr>
+              <template
+                x-for="ticketInfo in ticketsInfo(tickets, selectedBeginTime, selectedEndTime)"
+              >
+                <tr>
+                  <td
+                    x-text="`${ticketInfo.ticket.quantity} ${ticketInfo.ticket.name}`"
+                  ></td>
+                  <td
+                    x-text="ticketInfo.charges ? `$${ticketInfo.charges}` : 'Free'"
+                  ></td>
+                </tr>
+              </template>
+              <tr class="ticket_charges_heading">
+                <td>Total Payable</td>
+                <td
+                  x-text="getTotalCharges(tickets, selectedBeginTime, selectedEndTime)"
+                ></td>
+              </tr>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- Duration subsection -->
+      <section>
+        <h2>Duration</h2>
+        <div class="duration_container">
+          <!-- Times dropdowns -->
+          <!-- timeOption = {label: 12hr-time, value: 24hr-time} -->
+          <div class="durations">
+            <select
+              class="timeoptions"
+              x-model="selectedBeginTime"
+              x-init="$watch('selectedBeginTime', value => selectedEndTime = Number(value)+1)"
+            >
+              <template x-for="timeOption in timeOptions">
+                <option
+                  x-bind:value="timeOption.value"
+                  x-text="timeOption.label"
+                  x-show="timeOption.value !== 18"
+                ></option>
+              </template>
+            </select>
+            <span> - </span>
+            <select class="timeoptions" x-model="selectedEndTime">
+              <template x-for="timeOption in timeOptions.slice(1)">
+                <option
+                  x-bind:value="timeOption.value"
+                  x-text="timeOption.label"
+                  x-bind:disabled="timeOption.value <= selectedBeginTime"
+                ></option>
+              </template>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reset Form Button -->
+      <button class="reset-btn" @click="resetForm()">Reset Form</button>
+
+      <section>
+        <h2>You will be charged based on 1 hour based time slots</h2>
+        <!-- Charges Table -->
+        <div class="charges_table">
+          <!-- <div class="table_heading">
+            <p>Charges Info</p>
+          </div> -->
+          <table>
+            <thead>
+              <tr>
+                <td>Hour Type</td>
+                <td>Ticket Category</td>
+                <td>Charges</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Normal</td>
+                <td>Foreigner Adult</td>
+                <td>10 USD</td>
+              </tr>
+              <tr>
+                <td>Peak</td>
+                <td>Foreigner Adult</td>
+                <td>13 USD</td>
+              </tr>
+              <tr>
+                <td>Normal</td>
+                <td>Foreigner Child</td>
+                <td>5 USD</td>
+              </tr>
+              <tr>
+                <td>Peak</td>
+                <td>Foreigner Child</td>
+                <td>8 USD</td>
+              </tr>
+              <tr>
+                <td>Normal</td>
+                <td>SL Adult</td>
+                <td>4 USD</td>
+              </tr>
+              <tr>
+                <td>Peak</td>
+                <td>SL Adult</td>
+                <td>6 USD</td>
+              </tr>
+              <tr>
+                <td>Normal</td>
+                <td>SL Child</td>
+                <td>2 USD</td>
+              </tr>
+              <tr>
+                <td>Peak</td>
+                <td>SL Child</td>
+                <td>3 USD</td>
+              </tr>
+              <tr>
+                <td>Normal / Peak</td>
+                <td>Infants</td>
+                <td>Free</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table_note">
+            <span>Note:</span> Peak are from 10.00 am to 1.00 pm and from 3.00
+            pm to 6.00 pm.
+          </p>
+        </div>
+      </section>
+
+      <div class="continue_button">
+        <a
+          href="./details.html"
+          x-bind:class="shouldDisablePurchase(tickets, selectedDate) ? 'inactive disabled-link' : 'active'"
+          @click="storeSummaryTable(selectedDate, tickets, selectedBeginTime, selectedEndTime, timeOptions)"
+          >Continue with purchase</a
+        >
+      </div>
+    </section>
+  </body>
+</html>

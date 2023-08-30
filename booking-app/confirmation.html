@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/media-queries.css" />
+    <script src="./assets/scripts/confirmation.js"></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Life of Turtles - Booking</title>
+  </head>
+  <body
+    x-data="{
+      details: getDetails(),
+      summaryTable: getSummaryTable()
+    }"
+  >
+    <!-- Header -->
+    <div class="header">
+      <!-- Home link -->
+      <div class="home-link">
+        <a href="../"> &lt; Home</a>
+      </div>
+      <!-- Title -->
+      <div class="title">
+        <a href="./">
+          <h1>Buy Tickets</h1>
+        </a>
+      </div>
+      <!-- Instructions -->
+      <div class="instructions">
+        <div class="instructions_text">
+          <p>Show your tickets via mobile</p>
+          <p>device or print at home.</p>
+        </div>
+        <img src="./assets/media/icons/mobile.png" alt="Mobile Logo" />
+      </div>
+    </div>
+
+    <!-- Sections List -->
+    <div class="sections">
+      <ul>
+        <li>Tickets</li>
+        <li>&gt;</li>
+        <li>Details</li>
+        <li>&gt;</li>
+        <li>Payment</li>
+        <li>&gt;</li>
+        <li class="current_section">Confirmation</li>
+      </ul>
+    </div>
+
+    <!-- Confirmation Section -->
+    <section class="page_section">
+      <div class="confirmation-heading">
+        <h2>Confirmation</h2>
+      </div>
+      <div class="confirmation-messge">
+        <p>
+          Thank you for your order. Your order has been confirmed with us. You
+          can show this confirmation at the entrance. Following is the summary
+          of your order.
+        </p>
+      </div>
+      <!-- Confirmation table -->
+      <div class="summary_table other-page-summary">
+        <table>
+          <tr>
+            <td>Name</td>
+            <td x-text="details.fullname"></td>
+          </tr>
+          <tr>
+            <td>Date</td>
+            <td x-text="summaryTable.date"></td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td x-text="summaryTable.time"></td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td x-text="summaryTable.duration"></td>
+          </tr>
+          <tr>
+            <td>Mobile</td>
+            <td x-text="details.mobileNumber"></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td x-text="details.email"></td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td x-text="details.gender"></td>
+          </tr>
+          <tr class="ticket_charges_heading">
+            <td>Tickets</td>
+            <td>Charges</td>
+          </tr>
+          <template x-for="ticketInfo in summaryTable.ticketsInfo">
+            <tr>
+              <td
+                x-text="`${ticketInfo.ticket.quantity} ${ticketInfo.ticket.name}`"
+              ></td>
+              <td
+                x-text="ticketInfo.charges ? `$${ticketInfo.charges}` : 'Free'"
+              ></td>
+            </tr>
+          </template>
+          <tr class="ticket_charges_heading">
+            <td>Total Payable</td>
+            <td x-text="summaryTable.totalCharges"></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="continue_button">
+        <a href="./index.html" class="active">Buy Again!</a>
+      </div>
+    </section>
+  </body>
+</html>

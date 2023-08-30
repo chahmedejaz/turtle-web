@@ -1,0 +1,345 @@
+/*header*/
+:root {
+  --white: #f9f9f9;
+  --black: #36383f;
+  --grey: #85888c;
+  --blue: #3662a3;
+  --top_index: 100000;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global styles */
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  background-color: var(--white);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Header */
+.header {
+  display: flex;
+  background-color: var(--black);
+  position: sticky;
+  color: var(--white);
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 10px;
+  z-index: var(--top_index);
+}
+
+/* Title */
+.title {
+  margin-top: 5px;
+}
+
+/* Home Link */
+.home-link {
+  display: grid;
+  place-items: center;
+}
+
+.home-link a {
+  color: var(--white);
+  font-weight: bold;
+}
+
+/* Instructions */
+.instructions {
+  display: flex;
+}
+
+.instructions_text {
+  display: grid;
+  place-items: center;
+  margin-right: 10px;
+}
+
+.instructions img {
+  height: 50px;
+  background-color: var(--white);
+  border-radius: 10px;
+}
+
+/* Sections */
+.sections {
+  background-color: var(--black);
+  position: sticky;
+  z-index: var(--top_index);
+}
+
+.sections ul {
+  display: flex;
+}
+
+.sections li {
+  padding: 10px;
+  font-weight: 530;
+  color: whitesmoke;
+  text-shadow: var(--black);
+}
+
+.current_section {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.current_section:hover {
+  cursor: pointer;
+}
+
+/* Page subsections */
+.page_section {
+  max-width: 50%;
+  margin: 0 auto;
+  margin-top: 1%;
+}
+
+.page_section section {
+  margin-bottom: 20px;
+}
+
+.page_section section h2 {
+  margin-bottom: 5px;
+}
+
+/* Tickets */
+
+.ticket {
+  display: flex;
+  justify-content: space-between;
+  padding: 2%;
+}
+
+.ticket_quantity {
+  display: flex;
+}
+
+.ticket_quantity p {
+  padding: 10px;
+}
+
+.round-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(gray);
+  font-size: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+.ticket_name {
+  font-weight: 600;
+}
+
+.ticket_description {
+  font-size: 0.9rem;
+}
+
+/* Durations */
+.duration_container {
+  display: flex;
+  justify-content: space-between;
+  /* max-width: 70%; */
+}
+
+.timeoptions {
+  font-size: 1.25rem;
+}
+
+/* Charges table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+thead {
+  background-color: lightgray;
+  font-weight: bold;
+}
+
+.table_heading {
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  margin-bottom: 3px;
+}
+
+.table_note {
+  font-size: 0.9rem;
+  padding: 5px, 0;
+}
+
+.table_note span {
+  font-weight: bold;
+}
+
+/* Date Picker */
+
+.datepicker {
+  font-size: 1.25rem;
+}
+
+
+/* dates_guest_summary_container */
+
+.dates_guest {
+  width: 70%;
+}
+
+.dates_guest_summary_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket_charges_heading {
+  background-color: lightgray;
+  font-weight: bold;
+}
+
+/* Continue with purchase button */
+.continue_button {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5rem;
+}
+
+.continue_button a {
+  color: var(--white);
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.active {
+  background-color: var(--black);
+}
+
+.inactive {
+  background-color: lightgrey;
+}
+
+.disabled-link {
+  pointer-events: none;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+
+/* details + summary_container */
+
+.details_summary_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.details-fields {
+  width: 50%;
+}
+
+.fields-row {
+  display: flex;
+}
+
+.field {
+  padding: 3% 5%;
+}
+
+.section-heading {
+  font-weight: bolder;
+  font-size: 1.5rem;
+}
+
+.label {
+  font-weight: bold;
+  font-size: 1.15rem;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: var(--black);
+  padding-left: 1.5%;
+}
+
+.field-input {
+  width: 100%;
+  font-size: 1rem;
+  border: 1.25px solid;
+  border-radius: 7px;
+}
+
+.field-error {
+  color: red;
+  font-size: 0.9rem;
+  padding-left: 1.5%;
+}
+
+.summary_table {
+  /* width: 60%; */
+}
+
+.charges_table {
+  width: 60%;
+}
+
+.guests {
+  width: 50%;
+}
+
+.reset-btn{
+  background-color: whitesmoke;
+  border-radius: 5px;
+  font-size: .90rem;
+  padding: 3px;
+  margin-bottom: 0.75%;
+}
+
+.other-page-summary {
+  margin-bottom: 3%;
+}
+
+.secure-payment {
+  padding: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Confirmation */
+
+.confirmation-heading {
+  display: flex;
+  justify-content: center;
+}
+
+.confirmation-messge {
+  margin-bottom: 1rem;
+}
+
+.confirmation-messge p {
+  font-size: 1.25rem ;
+  font-style: italic;
+}
+
+.title a {
+  color: var(--white);
+}

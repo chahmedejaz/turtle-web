@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/media-queries.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.css"
+    />
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Life of Turtles - Booking</title>
+  </head>
+  <body
+    x-data="{
+      fullname: {touched: false, value: ''},
+      gender: {touched: false, value: ''},
+      mobileNumber: {touched: false, value: '', isValid: true},
+      email: {touched: false, value: ''},
+      confirmEmail: {touched: false, value: ''},
+      summaryTable: getSummaryTable()
+    }"
+  >
+    <!-- Header -->
+    <div class="header">
+      <!-- Home link -->
+      <div class="home-link">
+        <a href="../"> &lt; Home</a>
+      </div>
+      <!-- Title -->
+      <div class="title">
+        <a href="./">
+          <h1>Buy Tickets</h1>
+        </a>
+      </div>
+      <!-- Instructions -->
+      <div class="instructions">
+        <div class="instructions_text">
+          <p>Show your tickets via mobile</p>
+          <p>device or print at home.</p>
+        </div>
+        <img src="./assets/media/icons/mobile.png" alt="Mobile Logo" />
+      </div>
+    </div>
+
+    <!-- Sections List -->
+    <div class="sections">
+      <ul>
+        <li>Tickets</li>
+        <li>&gt;</li>
+        <li class="current_section">Details</li>
+        <li>&gt;</li>
+        <li>Payment</li>
+        <li>&gt;</li>
+        <li>Confirmation</li>
+      </ul>
+    </div>
+
+    <!-- Details Section -->
+    <section class="page_section">
+      <!-- Summary table -->
+      <div class="summary_table other-page-summary">
+        <h2>Purchase Summary</h2>
+        <table>
+          <tr>
+            <td>Date</td>
+            <td x-text="summaryTable.date"></td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td x-text="summaryTable.time"></td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td x-text="summaryTable.duration"></td>
+          </tr>
+          <tr class="ticket_charges_heading">
+            <td>Tickets</td>
+            <td>Charges</td>
+          </tr>
+          <template x-for="ticketInfo in summaryTable.ticketsInfo">
+            <tr>
+              <td
+                x-text="`${ticketInfo.ticket.quantity} ${ticketInfo.ticket.name}`"
+              ></td>
+              <td
+                x-text="ticketInfo.charges ? `$${ticketInfo.charges}` : 'Free'"
+              ></td>
+            </tr>
+          </template>
+          <tr class="ticket_charges_heading">
+            <td>Total Payable</td>
+            <td x-text="summaryTable.totalCharges"></td>
+          </tr>
+        </table>
+      </div>
+      <!-- details form + Summary Table -->
+      <p class="section-heading">Enter your details</p>
+      <div class="details-fields">
+        <div class="field">
+          <p class="label">Full Name</p>
+          <p class="help-text">Same as on your ID</p>
+          <input
+            class="field-input"
+            type="text"
+            name="full-name"
+            x-model="fullname.value"
+            @blur="touchedField(fullname)"
+          />
+          <p class="field-error" x-show="!validateField(fullname)">
+            Please add the full name
+          </p>
+        </div>
+
+        <div class="field">
+          <p class="label">Gender</p>
+          <p class="help-text">Optional</p>
+          <select class="field-input" name="Gender" x-model="gender.value">
+            <option value=""></option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <p class="label">Mobile Phone</p>
+          <p class="help-text">
+            We may reach out for booking updates here over SMS/Whatsapp
+          </p>
+          <input
+            class="field-input"
+            type="tel"
+            id="mobilePhone"
+            x-model="mobileNumber.value"
+            @blur="touchedField(mobileNumber)"
+            x-init="$watch('mobileNumber', (value) => validatePhoneField(value))"
+          />
+          <p class="field-error" x-show="!mobileNumber.isValid">
+            Add the valid mobile number
+          </p>
+        </div>
+
+        <div class="field">
+          <p class="label">Email</p>
+          <p class="help-text">We'll send your tickets here</p>
+          <input
+            class="field-input"
+            type="email"
+            name="email"
+            x-model="email.value"
+            @blur="touchedField(email)"
+          />
+          <p class="field-error" x-show="!validateField(email)">
+            Add the valid email ID
+          </p>
+        </div>
+
+        <div class="field">
+          <p class="label">Confirm Email</p>
+          <p class="help-text">Just to confirm we've got this right</p>
+          <input
+            class="field-input"
+            type="email"
+            name="email"
+            x-model="confirmEmail.value"
+            @blur="touchedField(confirmEmail)"
+          />
+          <p class="field-error" x-show="!validateField(confirmEmail)">
+            Add the valid email ID
+          </p>
+          <p class="field-error" x-show="!validateEmails(email, confirmEmail)">
+            Emails don't match
+          </p>
+        </div>
+      </div>
+
+      <div class="continue_button">
+        <a
+          href="./payment.html"
+          x-bind:class="shouldDisablePurchase(fullname, mobileNumber, email, confirmEmail) ? 'inactive disabled-link' : 'active'"
+          @click="storeDetails(fullname, gender, mobileNumber, email, confirmEmail)"
+          >Continue with purchase</a
+        >
+      </div>
+    </section>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+  <script src="./assets/scripts/details.js"></script>
+</html>

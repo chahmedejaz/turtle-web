@@ -1,0 +1,73 @@
+h1 {
+  margin: 0;
+  color: #fff;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.main img {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+}
+
+.info-section {
+  padding: 30px;
+  background-color: #eef5ff;
+  animation: fade-in 1s;
+}
+
+.hatchery-img {
+  width: -webkit-fill-available;
+}
+
+.info-section h2 {
+  color: #337ab7;
+  margin-top: 0;
+}
+
+.info-section p {
+  color: #555;
+  animation: slide-up 1s;
+}
+
+.hero {
+  background-image: url("../media/images/michelle-owens-PB_KWBFDclY-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  padding: 160px 30px;
+  text-align: center;
+}
+
+.hero p {
+
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/media-queries.css">
+    <script src="./assets/scripts/payment.js"></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <title>Life of Turtles - Booking</title>
+  </head>
+  <body
+    x-data="{
+      cardNumber: {touched: false, value: ''},
+      expiryDate: {touched: false, value: ''},
+      CVC_CVV: {touched: false, value: ''},
+      name: {touched: false, value: ''},
+      summaryTable: getSummaryTable()
+    }"
+  >
+    <!-- Header -->
+    <div class="header">
+      <!-- Home link -->
+      <div class="home-link">
+        <a href="../"> &lt; Home</a>
+      </div>
+      <!-- Title -->
+      <div class="title">
+        <a href="./">
+          <h1>Buy Tickets</h1>
+        </a>
+      </div>
+      <!-- Instructions -->
+      <div class="instructions">
+        <div class="instructions_text">
+          <p>Show your tickets via mobile</p>
+          <p>device or print at home.</p>
+        </div>
+        <img src="./assets/media/icons/mobile.png" alt="Mobile Logo" />
+      </div>
+    </div>
+
+    <!-- Sections List -->
+    <div class="sections">
+      <ul>
+        <li>Tickets</li>
+        <li>&gt;</li>
+        <li>Details</li>
+        <li>&gt;</li>
+        <li class="current_section">Payment</li>
+        <li>&gt;</li>
+        <li>Confirmation</li>
+      </ul>
+    </div>
+
+    <!-- Payment Section -->
+    <section class="page_section">
+      <!-- Summary table -->
+      <div class="summary_table other-page-summary">
+        <h2>Purchase Summary</h2>
+        <table>
+          <tr>
+            <td>Date</td>
+            <td x-text="summaryTable.date"></td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td x-text="summaryTable.time"></td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td x-text="summaryTable.duration"></td>
+          </tr>
+          <tr class="ticket_charges_heading">
+            <td>Tickets</td>
+            <td>Charges</td>
+          </tr>
+          <template x-for="ticketInfo in summaryTable.ticketsInfo">
+            <tr>
+              <td
+                x-text="`${ticketInfo.ticket.quantity} ${ticketInfo.ticket.name}`"
+              ></td>
+              <td
+                x-text="ticketInfo.charges ? `$${ticketInfo.charges}` : 'Free'"
+              ></td>
+            </tr>
+          </template>
+          <tr class="ticket_charges_heading">
+            <td>Total Payable</td>
+            <td
+              x-text="summaryTable.totalCharges"
+            ></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Payment form -->
+      <p class="section-heading">Enter your payment details</p>
+      <div class="details-fields">
+        <div class="field">
+          <p class="label">Card Number</p>
+          <input
+            class="field-input"
+            type="text"
+            x-model="cardNumber.value"
+            @blur="touchedField(cardNumber)"
+          />
+          <p class="field-error" x-show="!validateField(cardNumber)">
+            Please add the Card Number
+          </p>
+          <p class="field-error" x-show="!validateCardNumber(cardNumber)">
+            Please add a valid card number of 16 digits
+          </p>
+        </div>
+
+        <div class="field">
+          <p class="label">Expiry Date</p>
+          <input
+            class="field-input"
+            type="text"
+            x-model="expiryDate.value"
+            @blur="touchedField(expiryDate)"
+          />
+          <p class="field-error" x-show="!validateField(expiryDate)">
+            Please add the Expiry Date
+          </p>
+          <p class="field-error" x-show="!validateExpiryDate(expiryDate)">
+            Card too old
+          </p>
+        </div>
+
+        <div class="field">
+          <p class="label">CVC / CVV</p>
+          <input
+            class="field-input"
+            type="text"
+            x-model="CVC_CVV.value"
+            @blur="touchedField(CVC_CVV)"
+          />
+          <p class="field-error" x-show="!validateField(CVC_CVV)">
+            Please add the CVC / CVV
+          </p>
+          <p class="field-error" x-show="!validateCVC(CVC_CVV)">
+            CVC / CVV should be of 3 digits
+          </p>
+        </div>
+
+        <div class="field">
+          <p class="label">Name on Card</p>
+          <input
+            class="field-input"
+            type="text"
+            x-model="name.value"
+            @blur="touchedField(name)"
+          />
+          <p class="field-error" x-show="!validateField(name)">
+            Please add the Name
+          </p>
+          <p class="field-error" x-show="!validateCardName(name)">
+            Name contains invalid characters
+          </p>
+        </div>
+      </div>
+
+      <div class="continue_button">
+        <a
+          href="./confirmation.html"
+          x-bind:class="shouldDisablePurchase(cardNumber, expiryDate, CVC_CVV, name) ? 'inactive disabled-link' : 'active'"
+          @click="storePaymentDetails(cardNumber, expiryDate, CVC_CVV, name)"
+          x-text="`Pay ${summaryTable.totalCharges}`"
+          ></a
+        >
+      </div>
+      <div class="secure-payment">
+        <p>Secured Payment 🔒</p>
+      </div>
+    </section>
+  </body>
+</html>

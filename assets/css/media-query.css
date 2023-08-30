@@ -1,0 +1,120 @@
+/* Responsiveness */
+
+/* Responsiveness */
+
+@media (min-width: 1175px) {
+  .nav {
+    max-height: none;
+    top: 0;
+    position: relative;
+    float: right;
+    width: fit-content;
+    background-color: transparent;
+  }
+
+  .menu li {
+    float: left;
+  }
+
+  .menu a:hover {
+    background-color: transparent;
+    color: var(--grey);
+  }
+
+  .hamb {
+    display: none;
+  }
+}
+
+/* Media queries for hero, gallery and footer */
+
+@media only screen and (max-width: 768px) {
+  /* header {
+		flex-direction: column;
+		align-items: flex-start;
+	} */
+
+  /* 	nav {
+		margin-top: 20px;
+	}
+	
+	nav ul {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	
+	nav li {
+		margin-bottom: 10px;
+	} */
+
+  .hero {
+    padding: 80px 20px;
+  }
+
+  .about {
+    padding: 40px 20px;
+  }
+
+  .gallery {
+    padding: 40px 20px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .hero h2 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .cta-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .about h3 {
+    font-size: 20px;
+  }
+
+  .about p {
+    font-size: 16px;
+  }
+
+  .gallery h3 {
+    font-size: 20px;
+  }
+
+  .image-container img {
+    margin: 5px;
+    width: 150px;
+    height: 100px;
+  }
+
+  .image-container .gallery-img {
+    margin: 10px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 12rem;
+    height: auto !important;
+  }
+
+  footer p {
+    font-size: 14px;
+  }
+}
+
+/* all mobile devices except laptop, desktop and large screens */
+@media only screen and (max-width: 768px) and (not (min-width: 1024px)) {
+  .medium-img {
+    width: 18rem !important;
+  }
+}
+
+/* styles for tablets and iPads */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .medium-img {
+    width: 35rem !important;
+  }
+}
